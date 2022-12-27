@@ -6,6 +6,13 @@ module.exports = {
     extend: {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
+        satoshi: ["Satoshi", "sans-serif"],
+      },
+      colors: {
+        darkPurple: "#191739",
+        darkGrey: "#8C8C9C",
+        offWhite: "#e4e4ff",
+        transparent: "#00000059",
       },
     },
     screens: {

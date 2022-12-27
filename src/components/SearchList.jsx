@@ -3,13 +3,13 @@ import axios from "axios";
 
 const SearchList = ({ data, clicker, setCity }) => {
   var location = "";
+
   const getWeather = (event) => {
     location = event.target.innerText;
     setCity("");
     console.log(data.district, data.city, data.country);
     clicker(true);
     const URL = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.lat}&lon=${data.lon}&exclude=current,minutely,hourly,alerts&appid=1fa9ff4126d95b8db54f3897a208e91c&units=metric`;
-    const dummy = "";
     axios
       .get(URL)
       .then((resp) => {
@@ -19,7 +19,15 @@ const SearchList = ({ data, clicker, setCity }) => {
         console.log(err);
       });
   };
-  return <div onClick={getWeather}>{data.address}</div>;
+
+  return (
+    <div
+      onClick={getWeather}
+      className="px-2 py-2 text-white font-satoshi font-medium text-[16px] rounded-md hover:bg-[#2e2945] w-[80%] overflow-hidden "
+    >
+      {data.address}
+    </div>
+  );
 };
 
 export default React.memo(SearchList);
