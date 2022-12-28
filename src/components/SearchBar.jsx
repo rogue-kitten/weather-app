@@ -5,8 +5,19 @@ import axios from "axios";
 
 const SearchBar = () => {
   const [city, setCity] = useState("London");
-  const [searchResults, setSearchResults] = useState([]);
-  const [clicked, setClicked] = useState(true);
+  const [searchResults, setSearchResults] = useState([
+    {
+      address: "London, ENG, United Kingdom",
+      city: "London",
+      country: "United Kingdom",
+      district: "London",
+      isCity: true,
+      lat: 51.5073219,
+      lon: -0.1276474,
+      key: 0,
+    },
+  ]);
+  const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
     if (city.length <= 4) setClicked(true);
@@ -32,6 +43,8 @@ const SearchBar = () => {
                   country: query.properties.country,
                   lat: query.properties.lat,
                   lon: query.properties.lon,
+                  isCity:
+                    query.properties.result_type === "city" ? true : false,
                 }))
             );
             setClicked(false);
@@ -39,13 +52,13 @@ const SearchBar = () => {
           .catch((err) => {
             console.log(err);
           });
-      }, 100);
+      });
     }
   }, [city]);
 
   return (
     <div className="w-[380px]">
-      <div className="bg-black border border-[#344347] flex justify-center items-center w-full opacity-[.39] rounded-md px-2 py-4">
+      <div className="bg-black relative border border-[#344347] flex justify-center items-center w-full opacity-[.39] rounded-md px-2 py-4">
         <input
           type="text"
           placeholder="Search"
@@ -58,7 +71,7 @@ const SearchBar = () => {
         </div>
       </div>
       {searchResults.length != 0 && !clicked ? (
-        <ul className="px-2 bg-black opacity-[.39] rounded-md border border-[#344347] py-1  w-full">
+        <ul className="glass border border-[#344347] px-2 absolute rounded-md py-1 z-[2] w-[380px]">
           {searchResults.map((res) => (
             <li key={res.key} className="cursor-pointer rounded-md w-full py-1">
               <SearchList
@@ -74,4 +87,4 @@ const SearchBar = () => {
   );
 };
 
-export default SearchBar;
+export default React.memo(SearchBar);
