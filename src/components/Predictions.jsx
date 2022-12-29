@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 
 const Predictions = () => {
   const { prediction } = useContext(PredictionContext);
-  console.log(prediction);
 
   const [width, setWidth] = useState(0);
   const carousel = useRef();
@@ -33,4 +32,4 @@ const Predictions = () => {
   );
 };
 
-export default Predictions;
+export default React.memo(Predictions);

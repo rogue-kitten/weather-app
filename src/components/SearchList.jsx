@@ -11,7 +11,7 @@ const SearchList = ({ data, clicker, setCity }) => {
   const { setCurrent } = useContext(CurrentDataContext);
   const { setPrediction } = useContext(PredictionContext);
 
-  const formatToDate = (secs, format = "cccc, dd LLL yyyy") =>
+  const formatToDate = (secs, format = "ccc, dd LLL yyyy") =>
     DateTime.fromSeconds(secs).setZone(0).toFormat(format);
 
   const formatToTime = (secs, timezone, format = "HH:mm") =>
