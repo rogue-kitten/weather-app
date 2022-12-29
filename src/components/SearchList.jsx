@@ -58,7 +58,7 @@ const SearchList = ({ data, clicker, setCity }) => {
   return (
     <div
       onClick={getWeather}
-      className="px-2 py-2 text-offWhite font-satoshi text-[16px] rounded-md hover:bg-[#2e2945] w-[80%] overflow-hidden "
+      className="px-2 py-2 text-offWhite font-satoshi text-sm sm:text-base rounded-md hover:bg-[#2e2945] w-full overflow-hidden "
     >
       {data.address}
     </div>
