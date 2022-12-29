@@ -61,7 +61,7 @@ const Hero = () => {
 
   return (
     <div className="flex py-6 w-full justify-between items-center">
-      <div className=" flex flex-col justify-center items-start bg-darkPurple rounded-[40px] p-8 pr-12">
+      <div className=" flex flex-col justify-center items-start bg-darkPurple rounded-[40px] z-10 p-8 pr-12">
         <p className="text-darkGrey font-satoshi font-bold text-3xl">
           {current.location}
         </p>
@@ -99,8 +99,12 @@ const Hero = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-center items-center">
-        <img src={House} className="object-contain w-[440px] h-[440px] mr-4" />
+      <div className="flex justify-center items-center relative">
+        <img
+          src={House}
+          className="object-contain w-[440px] h-[440px] mr-4 z-[2]"
+        />
+        <div className="purple-gradient w-[628px] h-[628px] rounded-full absolute z-[0]" />
       </div>
     </div>
   );

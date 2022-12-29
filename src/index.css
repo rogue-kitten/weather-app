@@ -12,6 +12,19 @@
   background: linear-gradient(135.44deg, #2e3358 2.26%, #1c1b33 75.19%);
 }
 
+.purple-gradient {
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    #612fab -90.71deg,
+    rgba(97, 47, 171, 0) 50.02deg,
+    #612fab 129.55deg,
+    rgba(97, 47, 171, 0) 226.06deg,
+    #612fab 269.29deg,
+    rgba(97, 47, 171, 0) 410.02deg
+  );
+  filter: blur(146.875px);
+}
+
 .glass {
   background: rgba(0, 0, 0, 0.5);
   /* box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); */
