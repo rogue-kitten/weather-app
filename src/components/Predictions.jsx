@@ -16,7 +16,7 @@ const Predictions = () => {
   return (
     <motion.div
       ref={carousel}
-      className="mt-28 w-full mb-52 cursor-grab overflow-hidden"
+      className="mt-28 w-full mb- cursor-grab overflow-hidden z-10"
       whileTap={{ cursor: "grabbing" }}
     >
       <motion.div

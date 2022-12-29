@@ -57,7 +57,7 @@ const SearchBar = () => {
   }, [city]);
 
   return (
-    <div className="w-[380px]">
+    <div className="w-[380px] z-[5]">
       <div className="bg-black relative border border-[#344347] flex justify-center items-center w-full opacity-[.39] rounded-md px-2 py-4">
         <input
           type="text"
@@ -71,7 +71,7 @@ const SearchBar = () => {
         </div>
       </div>
       {searchResults.length != 0 && !clicked ? (
-        <ul className="glass border border-[#344347] px-2 absolute rounded-md py-1 z-[2] w-[380px]">
+        <ul className="glass border border-[#344347] px-2 absolute rounded-md py-1 w-[380px]">
           {searchResults.map((res) => (
             <li key={res.key} className="cursor-pointer rounded-md w-full py-1">
               <SearchList
