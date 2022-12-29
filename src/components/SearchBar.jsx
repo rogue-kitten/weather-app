@@ -34,7 +34,7 @@ const SearchBar = () => {
           .then((resp) => {
             setSearchResults(
               resp.data.features
-                .filter((item, index) => index < 4)
+                .filter((_, index) => index < 4)
                 .map((query, index) => ({
                   key: index,
                   address: query.properties.formatted,
@@ -57,21 +57,21 @@ const SearchBar = () => {
   }, [city]);
 
   return (
-    <div className="w-[380px] z-[5]">
+    <div className="w-[250px] sm:w-[380px] z-[5]">
       <div className="bg-black relative border border-[#344347] flex justify-center items-center w-full opacity-[.39] rounded-md px-2 py-4">
         <input
           type="text"
           placeholder="Search"
-          className="bg-inherit opacity-100 flex-1 font-satoshi font-medium text-[20px] px-2 text-darkGrey rounded-md focus:border-none focus:outline-none"
+          className="bg-inherit opacity-100 flex-1 font-satoshi font-medium text-base sm:text-lg px-2 text-darkGrey rounded-md focus:border-none focus:outline-none"
           value={city}
           onChange={(event) => setCity(event.target.value)}
         />
         <div className="flex justify-center items-center">
-          <img src={Search} className="w-[20px] h-[20px]" />
+          <img src={Search} className="min-w-[20px] min-h-[20px]" />
         </div>
       </div>
       {searchResults.length != 0 && !clicked ? (
-        <ul className="glass border border-[#344347] px-2 absolute rounded-md py-1 w-[380px]">
+        <ul className="glass border border-[#344347] px-2 absolute rounded-md py-1 mr-6 w-[250px] sm:min-w-[380px]">
           {searchResults.map((res) => (
             <li key={res.key} className="cursor-pointer rounded-md w-full py-1">
               <SearchList
