@@ -20,7 +20,7 @@ const SearchList = ({ data, clicker, setCity }) => {
   const getWeather = () => {
     setCity("");
     clicker(true);
-    const URL = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.lat}&lon=${data.lon}&exclude=current,minutely,hourly,alerts&appid=1fa9ff4126d95b8db54f3897a208e91c&units=metric`;
+    const URL = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.lat}&lon=${data.lon}&exclude=current,minutely,hourly,alerts&appid=49cc8c821cd2aff9af04c9f98c36eb74&units=metric`;
     axios
       .get(URL)
       .then((resp) => {

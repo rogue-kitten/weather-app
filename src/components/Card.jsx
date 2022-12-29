@@ -5,7 +5,7 @@ const Card = ({ item }) => {
   return (
     <div
       key={item.key}
-      className="bg-darkPurple flex flex-col w-[350px] h-[300px] rounded-[30px] px-6 py-8 pr-12"
+      className="bg-darkPurple flex flex-col min-w-[350px] rounded-[30px] px-6 py-8 pr-12 select-none"
     >
       <p className="text-darkGrey font-satoshi font-medium text-2xl mt-1">
         {item.date}
