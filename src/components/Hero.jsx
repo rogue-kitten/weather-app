@@ -14,8 +14,8 @@ const getTemp = (current) => {
   else if (time <= 11)
     return {
       ...temp,
-      temp: current.temp.morning,
-      feels_like: current.feels_like.morning,
+      temp: current.temp.morn,
+      feels_like: current.feels_like.morn,
     };
   else if (time <= 15)
     return {
