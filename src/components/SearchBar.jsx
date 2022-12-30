@@ -5,18 +5,7 @@ import axios from "axios";
 
 const SearchBar = () => {
   const [city, setCity] = useState("London");
-  const [searchResults, setSearchResults] = useState([
-    {
-      address: "London, ENG, United Kingdom",
-      city: "London",
-      country: "United Kingdom",
-      district: "London",
-      isCity: true,
-      lat: 51.5073219,
-      lon: -0.1276474,
-      key: 0,
-    },
-  ]);
+  const [searchResults, setSearchResults] = useState([]);
   const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
@@ -29,30 +18,27 @@ const SearchBar = () => {
     };
 
     if (city.length != 0) {
-      setTimeout(() => {
-        axios(config)
-          .then((resp) => {
-            setSearchResults(
-              resp.data.features
-                .filter((_, index) => index < 4)
-                .map((query, index) => ({
-                  key: index,
-                  address: query.properties.formatted,
-                  district: query.properties.address_line1,
-                  city: query.properties.city,
-                  country: query.properties.country,
-                  lat: query.properties.lat,
-                  lon: query.properties.lon,
-                  isCity:
-                    query.properties.result_type === "city" ? true : false,
-                }))
-            );
-            setClicked(false);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      });
+      axios(config)
+        .then((resp) => {
+          setSearchResults(
+            resp.data.features
+              .filter((_, index) => index < 4)
+              .map((query, index) => ({
+                key: index,
+                address: query.properties.formatted,
+                district: query.properties.address_line1,
+                city: query.properties.city,
+                country: query.properties.country,
+                lat: query.properties.lat,
+                lon: query.properties.lon,
+                isCity: query.properties.result_type === "city" ? true : false,
+              }))
+          );
+          setClicked(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, [city]);
 
@@ -67,7 +53,7 @@ const SearchBar = () => {
           onChange={(event) => setCity(event.target.value)}
         />
         <div className="flex justify-center items-center">
-          <img src={Search} className="min-w-[20px] min-h-[20px]" />
+          <img src={Search} className="min-w-[25px] min-h-[25px]" />
         </div>
       </div>
       {searchResults.length != 0 && !clicked ? (

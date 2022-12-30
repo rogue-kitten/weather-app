@@ -37,71 +37,98 @@ const getTemp = (current) => {
     };
 };
 
+const isEmpty = (obj) => JSON.stringify(obj) === "{}";
+
 const Hero = () => {
   const { current } = useContext(CurrentDataContext);
 
-  const sideElements = [
-    {
-      src: sunrise,
-      data: current.sunrise,
-    },
-    {
-      src: sunset,
-      data: current.sunset,
-    },
-    {
-      src: humidity,
-      data: `${current.humidity} %`,
-    },
-    {
-      src: wind,
-      data: `${current.wind_speed.toFixed(1)} kmph`,
-    },
-  ];
-
+  var sideElements = [];
+  if (current) {
+    sideElements = [
+      {
+        src: sunrise,
+        data: current.sunrise,
+      },
+      {
+        src: sunset,
+        data: current.sunset,
+      },
+      {
+        src: humidity,
+        data: `${current.humidity} %`,
+      },
+      {
+        src: wind,
+        data: `${current.wind_speed?.toFixed(1)} kmph`,
+      },
+    ];
+  }
   return (
-    <div className="flex flex-col-reverse sm:flex-row py-2 md:py-6 w-full justify-between items-start sm:items-center">
-      <div className=" flex flex-col justify-center items-start bg-darkPurple rounded-xl ss:rounded-2xl sm:rounded-3xl md:rounded-[35px] z-10 px-4 py-8 xs:p-8 mt-5 sm:mt-0 sm:pr-12">
-        <p className="text-darkGrey font-satoshi font-bold text-2xl md:text-3xl">
-          {current.location}
-        </p>
-        <p className="text-darkGrey font-satoshi font-medium text-lg sm:text-xl md:text-2xl mt-1">
-          {current.date}
-        </p>
-        <div className="flex justify-center xs:justify-between space-x-14 ss:space-x-20 items-start mt-8">
-          <div>
-            <p className="text-darkGrey font-satoshi text-xl ss:text-2xl md:text-3xl font-bold capitalize">
-              {current.condition}
-            </p>
-            <p className="text-offWhite font-satoshi font-medium text-[70px] ss:text-[80px] md:text-[100px] leading-none">
-              {getTemp(current).temp.toFixed(1)}&deg;
-            </p>
-            <p className="text-offWhite font-satoshi font-medium text-base ss:text-lg md:text-xl mt-5">
-              Real feel {getTemp(current).feels_like.toFixed(1)}&deg;
-            </p>
-            <p className="text-offWhite font-satoshi font-medium text-base ss:text-lg md:text-xl">
-              {getTemp(current).min.toFixed(1)}&deg; /{" "}
-              {getTemp(current).max.toFixed(1)}
-              &deg;
-            </p>
-          </div>
-          <div className="flex flex-col space-y-2 ss:space-y-4">
-            {sideElements.map((element, index) => (
-              <div
-                key={index}
-                className="flex items-center space-x-2 xs:space-x-4"
-              >
-                <div className="flex justify-center -ml-8 sm:ml-0 items-center">
-                  <img src={element.src} className="object-contain" />
+    <div className="flex flex-col-reverse sm:flex-row py-2 md:py-6 w-full justify-between items-center ss:items-start sm:items-center">
+      {!isEmpty(current) ? (
+        <div className=" flex flex-col justify-center items-start bg-darkPurple rounded-xl ss:rounded-2xl sm:rounded-3xl md:rounded-[35px] z-10 px-4 py-8 xs:p-8 mt-5 sm:mt-0 sm:pr-12">
+          <p className="text-darkGrey font-satoshi font-bold text-2xl md:text-3xl">
+            {current.location}
+          </p>
+          <p className="text-darkGrey font-satoshi font-medium text-lg sm:text-xl md:text-2xl mt-1">
+            {current.date}
+          </p>
+          <div className="flex justify-center xs:justify-between space-x-14 ss:space-x-20 items-start mt-8">
+            <div>
+              <p className="text-darkGrey font-satoshi text-xl ss:text-2xl md:text-3xl font-bold capitalize">
+                {current.condition}
+              </p>
+              <p className="text-offWhite font-satoshi font-medium text-[70px] ss:text-[80px] md:text-[100px] leading-none">
+                {getTemp(current).temp?.toFixed(1)}&deg;
+              </p>
+              <p className="text-offWhite font-satoshi font-medium text-base ss:text-lg md:text-xl mt-5">
+                Real feel {getTemp(current).feels_like?.toFixed(1)}&deg;
+              </p>
+              <p className="text-offWhite font-satoshi font-medium text-base ss:text-lg md:text-xl">
+                {getTemp(current).min?.toFixed(1)}&deg; /{" "}
+                {getTemp(current).max?.toFixed(1)}
+                &deg;
+              </p>
+            </div>
+            <div className="flex flex-col space-y-2 ss:space-y-4">
+              {sideElements.map((element, index) => (
+                <div
+                  key={index}
+                  className="flex items-center space-x-2 xs:space-x-4"
+                >
+                  <div className="flex justify-center -ml-8 sm:ml-0 items-center">
+                    <img src={element.src} className="object-contain" />
+                  </div>
+                  <p className="text-offWhite font-satoshi font-medium text-base ss:text-lg md:text-xl">
+                    {element.data}
+                  </p>
                 </div>
-                <p className="text-offWhite font-satoshi font-medium text-base ss:text-lg md:text-xl">
-                  {element.data}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className=" flex flex-col justify-center items-start bg-darkPurple rounded-xl ss:rounded-2xl sm:rounded-3xl md:rounded-[35px] z-10 px-4 py-8 xs:p-8 mt-5 sm:mt-0 sm:pr-12">
+          <div role="status" className="max-w-sm">
+            <p className="text-darkGrey font-satoshi font-bold text-2xl md:text-3xl">
+              Enter your location
+            </p>
+            <p className="text-darkGrey font-satoshi font-medium text-lg sm:text-xl md:text-2xl mt-1">
+              And get real time weather insights
+            </p>
+            <div className="animate-pulse">
+              <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4 mt-7"></div>
+              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-2.5"></div>
+              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
+              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[330px] mb-2.5"></div>
+              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[300px] mb-2.5"></div>
+              <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
+            </div>
+
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      )}
       <div className="flex flex-1 justify-center items-center ml-4 relative">
         <img
           src={House}
