@@ -9,7 +9,7 @@ const SearchBar = () => {
   const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
-    if (city.length <= 4) setClicked(true);
+    if (city.length <= 2) setClicked(true);
 
     var config = {
       method: "get",
