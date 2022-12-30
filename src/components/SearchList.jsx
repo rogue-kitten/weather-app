@@ -5,8 +5,14 @@ import { DateTime } from "luxon";
 
 const SearchList = ({ data, clicker, setCity }) => {
   var location = "";
-  if (data.isCity) location = `${data.city}, ${data.country}`;
-  else location = `${data.district}, ${data.city}, ${data.country}`;
+  if (data.isCity)
+    location = `${data.city ? data.city + ", " : ""}${
+      data.country ? data.country : ""
+    }`;
+  else
+    location = `${data.district ? data.district + ", " : ""}${
+      data.city ? data.city + ", " : ""
+    }${data.country ? data.country : ""}`;
 
   const { setCurrent } = useContext(CurrentDataContext);
   const { setPrediction } = useContext(PredictionContext);
@@ -60,7 +66,7 @@ const SearchList = ({ data, clicker, setCity }) => {
       onClick={getWeather}
       className="px-2 py-2 text-offWhite font-satoshi text-sm sm:text-base rounded-md hover:bg-[#2e2945] w-full overflow-hidden "
     >
-      {data.address}
+      {location}
     </div>
   );
 };
