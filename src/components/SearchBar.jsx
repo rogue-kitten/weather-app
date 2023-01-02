@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Search } from "../assets";
 import SearchList from "./SearchList";
 import axios from "axios";
+import Toggle from "./Toggle";
 
 const SearchBar = () => {
   const [city, setCity] = useState("London");
@@ -42,33 +43,45 @@ const SearchBar = () => {
     }
   }, [city]);
 
+  const inputRef = useRef();
+
   return (
-    <div className="w-[250px] sm:w-[380px] z-[5]">
-      <div className="bg-black relative border border-[#344347] flex justify-center items-center w-full opacity-[.39] rounded-md px-2 py-4">
-        <input
-          type="text"
-          placeholder="Search"
-          className="bg-inherit opacity-100 flex-1 font-satoshi font-medium text-base sm:text-lg px-2 text-darkGrey rounded-md focus:border-none focus:outline-none"
-          value={city}
-          onChange={(event) => setCity(event.target.value)}
-        />
-        <div className="flex justify-center items-center">
-          <img src={Search} className="min-w-[25px] min-h-[25px]" />
+    <div className="flex justify-between items-center space-x-4">
+      <Toggle />
+      <div className="w-[250px] sm:w-[380px] z-[5]">
+        <div className="bg-black relative border border-[#344347] flex justify-center items-center w-full opacity-[.39] rounded-md px-2 py-4 ss:space-x-3">
+          <div
+            onClick={() => inputRef.current.focus()}
+            className="flex justify-center items-center"
+          >
+            <img src={Search} className="min-w-[25px] min-h-[25px]" />
+          </div>
+          <input
+            type="text"
+            placeholder="Search"
+            className="bg-inherit opacity-100 flex-1 font-satoshi font-medium text-base sm:text-lg px-2 text-darkGrey rounded-md focus:border-none focus:outline-none"
+            value={city}
+            onChange={(event) => setCity(event.target.value)}
+            ref={inputRef}
+          />
         </div>
+        {searchResults.length != 0 && !clicked ? (
+          <ul className="glass border border-[#344347] px-2 absolute rounded-md py-1 mr-6 w-[250px] sm:min-w-[380px]">
+            {searchResults.map((res) => (
+              <li
+                key={res.key}
+                className="cursor-pointer rounded-md w-full py-1"
+              >
+                <SearchList
+                  data={res}
+                  clicker={setClicked}
+                  setCity={setCity}
+                ></SearchList>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
-      {searchResults.length != 0 && !clicked ? (
-        <ul className="glass border border-[#344347] px-2 absolute rounded-md py-1 mr-6 w-[250px] sm:min-w-[380px]">
-          {searchResults.map((res) => (
-            <li key={res.key} className="cursor-pointer rounded-md w-full py-1">
-              <SearchList
-                data={res}
-                clicker={setClicked}
-                setCity={setCity}
-              ></SearchList>
-            </li>
-          ))}
-        </ul>
-      ) : null}
     </div>
   );
 };
