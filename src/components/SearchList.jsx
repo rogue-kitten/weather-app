@@ -1,7 +1,13 @@
 import React, { useContext } from "react";
 import axios from "axios";
-import { CurrentDataContext, PredictionContext } from "../App";
+import { CurrentDataContext, PredictionContext, UnitContext } from "../App";
 import { DateTime } from "luxon";
+
+const formatToDate = (secs, format = "ccc, dd LLL yyyy") =>
+  DateTime.fromSeconds(secs).setZone(0).toFormat(format);
+
+const formatToTime = (secs, timezone, format = "HH:mm") =>
+  DateTime.fromSeconds(secs).setZone(timezone).toFormat(format);
 
 const SearchList = ({ data, clicker, setCity }) => {
   var location = "";
@@ -16,17 +22,18 @@ const SearchList = ({ data, clicker, setCity }) => {
 
   const { setCurrent } = useContext(CurrentDataContext);
   const { setPrediction } = useContext(PredictionContext);
-
-  const formatToDate = (secs, format = "ccc, dd LLL yyyy") =>
-    DateTime.fromSeconds(secs).setZone(0).toFormat(format);
-
-  const formatToTime = (secs, timezone, format = "HH:mm") =>
-    DateTime.fromSeconds(secs).setZone(timezone).toFormat(format);
+  const { unit } = useContext(UnitContext);
 
   const getWeather = () => {
     setCity("");
     clicker(true);
-    const URL = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.lat}&lon=${data.lon}&exclude=current,minutely,hourly,alerts&appid=49cc8c821cd2aff9af04c9f98c36eb74&units=metric`;
+    const URL = `https://api.openweathermap.org/data/2.5/onecall?lat=${
+      data.lat
+    }&lon=${
+      data.lon
+    }&exclude=current,minutely,hourly,alerts&appid=49cc8c821cd2aff9af04c9f98c36eb74&units=${
+      unit ? "metric" : "imperial"
+    }`;
     axios
       .get(URL)
       .then((resp) => {
@@ -34,6 +41,8 @@ const SearchList = ({ data, clicker, setCity }) => {
 
         setCurrent({
           location: location,
+          lat: data.lat,
+          lon: data.lon,
           date: formatToDate(resp.data.daily[0].dt),
           time: formatToTime(resp.data.daily[0].dt, timezone),
           sunrise: formatToTime(resp.data.daily[0].sunrise, timezone),
@@ -71,4 +80,5 @@ const SearchList = ({ data, clicker, setCity }) => {
   );
 };
 
+export { formatToDate, formatToTime };
 export default React.memo(SearchList);
