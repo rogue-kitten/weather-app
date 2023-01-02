@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import React, { useContext, useEffect } from "react";
+=======
+>>>>>>> 4ad900e34831d6105290b4abe16f9b4cea1d9865
 import { CurrentDataContext, PredictionContext, UnitContext } from "../App";
 import { formatToTime, formatToDate } from "./SearchList";
 import axios from "axios";
