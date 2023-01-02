@@ -14,7 +14,7 @@ const Toggle = () => {
         current.lat
       }&lon=${
         current.lon
-      }&exclude=current,minutely,hourly,alerts&appid=49cc8c821cd2aff9af04c9f98c36eb74&units=${
+      }&exclude=current,minutely,hourly,alerts&appid=895284fb2d2c50a520ea537456963d9c&units=${
         unit ? "metric" : "imperial"
       }`;
       axios
