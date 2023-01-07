@@ -1,6 +1,7 @@
 import React from "react";
 import { Logo } from "../assets";
-import SearchBar from "./SearchBar";
+import { SearchBar } from "./SearchBar";
+
 const NavBar = () => {
   return (
     <div className="pt-4 md:py-6 w-full flex justify-center xs:justify-between items-center">

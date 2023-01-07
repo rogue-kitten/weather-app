@@ -1,7 +1,7 @@
+import axios from "axios";
 import React, { useContext, useEffect } from "react";
 import { CurrentDataContext, PredictionContext, UnitContext } from "../App";
-import { formatToTime, formatToDate } from "./SearchList";
-import axios from "axios";
+import { formatToDate, formatToTime } from "./SearchBar";
 
 const Toggle = () => {
   const { unit, setUnit } = useContext(UnitContext);
@@ -53,7 +53,7 @@ const Toggle = () => {
   }, [unit]);
   return (
     <button
-      className="w-12 h-7 rounded-full z-10 bg-darkGrey flex items-center focus:outline-none"
+      className="w-12 h-7 rounded-full bg-darkGrey flex items-center focus:outline-none"
       onClick={() => setUnit((prev) => !prev)}
     >
       <div
