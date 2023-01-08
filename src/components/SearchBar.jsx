@@ -1,6 +1,7 @@
 import { Combobox, Dialog } from "@headlessui/react";
-import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
+import { CheckIcon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
+import { motion } from "framer-motion";
 import { DateTime } from "luxon";
 import React, { useContext, useEffect, useState } from "react";
 import { CurrentDataContext, PredictionContext, UnitContext } from "../App";
@@ -30,6 +31,7 @@ export const SearchBar = () => {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [submitted, setSubmitted] = useState(true);
 
   const { setCurrent } = useContext(CurrentDataContext);
   const { setPrediction } = useContext(PredictionContext);
@@ -72,8 +74,8 @@ export const SearchBar = () => {
 
   useEffect(() => {
     setQuery("");
-    setSearchResults([]);
     setIsOpen(false);
+    setSearchResults([]);
     const URL = `https://api.openweathermap.org/data/2.5/onecall?lat=${
       selectedCity.lat
     }&lon=${
@@ -115,7 +117,8 @@ export const SearchBar = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [selectedCity]);
+    setSelectedCity([]);
+  }, [submitted]);
 
   useEffect(() => {
     function onKeyDown(e) {
@@ -136,7 +139,10 @@ export const SearchBar = () => {
     <div className="flex justify-between items-center z-10 space-x-4">
       <button
         className="w-[250px] sm:w-[380px] bg-black border border-[#344347] flex items-center opacity-[.39] rounded-lg px-2 py-4 ss:space-x-3 focus:outline-none"
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          setIsOpen(true);
+          setSubmitted(false);
+        }}
       >
         <div className="flex items-center w-full">
           <MagnifyingGlassIcon className="w-6 h-6 text-darkGrey" />
@@ -158,7 +164,7 @@ export const SearchBar = () => {
               <MagnifyingGlassIcon className="w-4 h-4 ss:w-5 ss:h-5 text-darkGrey inline-block " />
               <Combobox.Input
                 onChange={(event) => setQuery(event.target.value)}
-                displayValue={""}
+                displayValue={(city) => formatResult(city)}
                 className="bg-inherit border-none focus:outline-none font-satoshi font-medium text-base sm:text-lg px-2 text-darkGrey rounded-md placeholder:text-darkGrey placeholder:font-satoshi placeholder:font-medium sm:placeholder:text-lg overflow-x-hidden"
                 placeholder="Search for your city ..."
                 autoComplete="off"
@@ -166,18 +172,42 @@ export const SearchBar = () => {
               {loading && <Spinner />}
             </div>
             {searchResults.length > 0 && (
-              <Combobox.Options className="overflow-hidden mt-1 px-2 rounded-md py-1 mb-2">
-                {searchResults.map((res) => (
-                  <Combobox.Option
-                    key={res.key}
-                    value={res}
-                    className="cursor-pointer rounded-md w-full py-3 px-2 text-offWhite font-satoshi text-sm sm:text-base ui-active:bg-[#2e2945] overflow-hidden "
+              <>
+                <Combobox.Options
+                  static
+                  className="overflow-hidden mt-1 px-2 rounded-md py-1 mb-2"
+                >
+                  {searchResults.map((res) => (
+                    <Combobox.Option
+                      key={res.key}
+                      value={res}
+                      className="cursor-pointer rounded-md w-full py-3 px-2 text-offWhite font-satoshi text-sm sm:text-base ui-active:bg-[#2e2945] overflow-hidden flex justify-between items-center"
+                    >
+                      {({ selected }) => (
+                        <>
+                          <span>{formatResult(res)}</span>
+                          {selected && (
+                            <div className="ml-1">
+                              <CheckIcon className="w-5 h-5 text-darkGrey" />
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </Combobox.Option>
+                  ))}
+                </Combobox.Options>
+                <div className="flex justify-between items-center px-2 py-1">
+                  <Toggle />
+                  <motion.button
+                    className="px-3 py-2 rounded-md font-satoshi text-base sm:text-lg bg-[#2e2945] text-offWhite font-medium"
+                    onClick={() => setSubmitted((prev) => !prev)}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    {formatResult(res)}
-                  </Combobox.Option>
-                ))}
-                <Toggle />
-              </Combobox.Options>
+                    Search
+                  </motion.button>
+                </div>
+              </>
             )}
           </Combobox>
         </Dialog.Panel>

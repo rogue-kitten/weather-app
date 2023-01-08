@@ -56,13 +56,13 @@ const Toggle = () => {
     <Switch
       checked={unit}
       onChange={setUnit}
-      className="relative inline-flex h-8 w-14 items-center rounded-full bg-[#2e2945] mt-2 ml-1.5"
+      className="relative inline-flex h-8 w-14 items-center rounded-full bg-[#2e2945] "
     >
       <span className="sr-only">Enable notifications</span>
       <div
         className={`${
           unit ? "translate-x-6" : "translate-x-1"
-        } flex justify-center items-center h-7 w-7 transform rounded-full bg-darkPurple font-satoshi font-medium text-darkGrey transition`}
+        } flex justify-center items-center h-7 w-7 transform rounded-full bg-darkPurple font-satoshi font-medium text-offWhite transition`}
       >
         <span>&deg;{unit ? "C" : "F"}</span>
       </div>
