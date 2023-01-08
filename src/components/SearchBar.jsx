@@ -134,7 +134,6 @@ export const SearchBar = () => {
 
   return (
     <div className="flex justify-between items-center z-10 space-x-4">
-      <Toggle />
       <button
         className="w-[250px] sm:w-[380px] bg-black border border-[#344347] flex items-center opacity-[.39] rounded-lg px-2 py-4 ss:space-x-3 focus:outline-none"
         onClick={() => setIsOpen(true)}
@@ -177,6 +176,7 @@ export const SearchBar = () => {
                     {formatResult(res)}
                   </Combobox.Option>
                 ))}
+                <Toggle />
               </Combobox.Options>
             )}
           </Combobox>

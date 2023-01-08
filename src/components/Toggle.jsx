@@ -1,3 +1,4 @@
+import { Switch } from "@headlessui/react";
 import axios from "axios";
 import React, { useContext, useEffect } from "react";
 import { CurrentDataContext, PredictionContext, UnitContext } from "../App";
@@ -52,18 +53,20 @@ const Toggle = () => {
     }
   }, [unit]);
   return (
-    <button
-      className="w-12 h-7 rounded-full bg-darkGrey flex items-center focus:outline-none"
-      onClick={() => setUnit((prev) => !prev)}
+    <Switch
+      checked={unit}
+      onChange={setUnit}
+      className="relative inline-flex h-8 w-14 items-center rounded-full bg-[#2e2945] mt-2 ml-1.5"
     >
+      <span className="sr-only">Enable notifications</span>
       <div
-        className={`w-8 h-8 rounded-full flex items-center justify-center transition duration-500 transform bg-darkPurple ${
-          unit ? "translate-x-6" : "-translate-x-2"
-        } p-1 text-offWhite font-satoshi font-bold text-base sm:text-lg`}
+        className={`${
+          unit ? "translate-x-6" : "translate-x-1"
+        } flex justify-center items-center h-7 w-7 transform rounded-full bg-darkPurple font-satoshi font-medium text-darkGrey transition`}
       >
-        &deg;{unit ? "C" : "F"}
+        <span>&deg;{unit ? "C" : "F"}</span>
       </div>
-    </button>
+    </Switch>
   );
 };
 
