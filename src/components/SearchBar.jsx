@@ -73,7 +73,7 @@ export const SearchBar = () => {
   useEffect(() => {
     setQuery("");
     setSearchResults([]);
-    setIsOpen((prev) => !prev);
+    setIsOpen(false);
     const URL = `https://api.openweathermap.org/data/2.5/onecall?lat=${
       selectedCity.lat
     }&lon=${
