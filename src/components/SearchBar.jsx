@@ -128,9 +128,18 @@ export const SearchBar = () => {
       }
     }
 
+    function onEnter(e) {
+      if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setSubmitted((prev) => !prev);
+      }
+    }
+
     window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keydown", onEnter);
 
     return () => {
+      window.addEventListener("keydown", onEnter);
       window.removeEventListener("keydown", onKeyDown);
     };
   }, []);

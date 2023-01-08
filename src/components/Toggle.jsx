@@ -52,6 +52,20 @@ const Toggle = () => {
         });
     }
   }, [unit]);
+
+  useEffect(() => {
+    function toggleUnit(e) {
+      if (e.key === "c" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setUnit((prev) => !prev);
+      }
+    }
+    window.addEventListener("keydown", toggleUnit);
+    return () => {
+      window.removeEventListener("keydown", toggleUnit);
+    };
+  }, []);
+
   return (
     <Switch
       checked={unit}
